@@ -11,8 +11,6 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="h8DE0Y" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
-    <FILE id="AcoVmN" name="CompressorTemplate.png" compile="0" resource="1"
-          file="../../../../../Pictures/CompressorTemplate.png"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017">
