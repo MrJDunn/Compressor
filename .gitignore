@@ -1,0 +1,61 @@
+JuceLibraryCode/
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compressor.pdb
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compressor.ilk
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compressor.exe
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/rc.write.1.tlog
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/rc.read.1.tlog
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/rc.command.1.tlog
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/link.write.1.tlog
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/link.read.1.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compressor_SharedCode.log
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compressor.lib
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/Lib.command.1.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/Lib-link.write.1.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/Lib-link.read.1.tlog
+Builds/VisualStudio2017/Compressor_StandalonePlugin.vcxproj
+Builds/VisualStudio2017/Compressor_SharedCode.vcxproj.filters
+Builds/VisualStudio2017/Compressor_SharedCode.vcxproj
+Builds/VisualStudio2017/Compressor.sln
+Builds/VisualStudio2017/.vs/Compressor/v15/Solution.VC.db
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_gui_extra.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_gui_basics.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_graphics.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_events.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_data_structures.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_cryptography.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_core.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/CL.command.1.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/BinaryData.obj
+Builds/VisualStudio2017/resources.rc
+Builds/VisualStudio2017/Compressor_VST3.vcxproj.filters
+Builds/VisualStudio2017/.vs/Compressor/v15/Browse.VC.db
+Builds/VisualStudio2017/.vs/Compressor/v15/.suo
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_audio_processors.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_audio_plugin_client_utils.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_audio_formats.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_audio_devices.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_audio_basics.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/PluginProcessor.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/PluginEditor.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/CL.read.1.tlog
+Builds/VisualStudio2017/Compressor_VST3.vcxproj
+Builds/VisualStudio2017/Compressor_StandalonePlugin.vcxproj.user
+Builds/VisualStudio2017/Compressor_StandalonePlugin.vcxproj.filters
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/CL.read.1.tlog
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/CL.command.1.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/vcpkg.applocal.log
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_opengl.obj
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/Compressor_SharedCode.write.1u.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/Compressor_SharedCode.lastbuildstate
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compress.53403E28.tlog/CL.write.1.tlog
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/vc141.pdb
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/resources.res
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/include_juce_audio_plugin_client_Standalone.obj
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compressor_StandalonePlugin.log
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/Compressor_StandalonePlugin.lastbuildstate
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/CL.write.1.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/Compressor_SharedCode.pdb
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/vcpkg.applocal.log
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/link.command.1.tlog
+Builds/VisualStudio2017/x64/Debug/Standalone Plugin/Compress.2E49931D.tlog/Compressor_StandalonePlugin.write.1u.tlog
+Builds/VisualStudio2017/x64/Debug/Shared Code/include_juce_audio_utils.obj
