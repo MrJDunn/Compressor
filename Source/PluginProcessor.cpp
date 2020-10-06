@@ -156,6 +156,8 @@ void CompressorAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
 
         // ..do something to the data...
     }
+
+	setGain(buffer);
 }
 
 //==============================================================================
@@ -181,6 +183,24 @@ void CompressorAudioProcessor::setStateInformation (const void* data, int sizeIn
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+}
+
+float CompressorAudioProcessor::getGain()
+{
+	return gain;
+}
+
+void CompressorAudioProcessor::setGain(AudioBuffer<float>& buffer)
+{
+	auto numChannels = buffer.getNumChannels();
+	auto numSamples = buffer.getNumSamples();
+
+	gain = 0.0f;
+
+	for(int i = 0; i < numChannels; ++i)
+		gain += buffer.getRMSLevel(i, 0, numSamples);
+
+	gain = gain / (float)numSamples;
 }
 
 //==============================================================================

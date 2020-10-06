@@ -3,6 +3,13 @@
 <JUCERPROJECT id="jyLrc7" name="Compressor" projectType="audioplug" jucerVersion="5.4.3">
   <MAINGROUP id="swlQGZ" name="Compressor">
     <GROUP id="{C9B6531F-6F86-528A-761B-83BC156E8164}" name="Source">
+      <GROUP id="{AEFBBA76-B962-5FBD-E622-7521948DC859}" name="Utility">
+        <FILE id="Dghy77" name="Converter.h" compile="0" resource="0" file="Source/Utility/Converter.h"/>
+      </GROUP>
+      <GROUP id="{7E5A6212-5AC0-3A66-2BFE-7C734F16A369}" name="Components">
+        <FILE id="gMv0Ge" name="VUMeter.cpp" compile="1" resource="0" file="Source/Components/VUMeter.cpp"/>
+        <FILE id="qUurAp" name="VUMeter.h" compile="0" resource="0" file="Source/Components/VUMeter.h"/>
+      </GROUP>
       <FILE id="EgWOLq" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="nkOMxB" name="PluginProcessor.h" compile="0" resource="0"

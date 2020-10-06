@@ -13,6 +13,10 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 
+#include "Components/VUMeter.h"
+
+#include "Utility/Converter.h"
+
 //==============================================================================
 /**
 */
@@ -24,6 +28,8 @@ public:
 
     //==============================================================================
     void paint (Graphics&) override;
+	void paintOverChildren (Graphics&) override;
+
     void resized() override;
 
 private:
@@ -31,6 +37,8 @@ private:
     // access the processor object that created it.
     CompressorAudioProcessor& processor;
 
-	ImageComponent iStencil;
+	Image iStencil;
+	VUMeter vuMeter;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CompressorAudioProcessorEditor)
 };
