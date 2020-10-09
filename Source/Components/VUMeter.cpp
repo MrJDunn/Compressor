@@ -34,6 +34,7 @@ void VUMeter::resized()
 void VUMeter::paint(Graphics& g)
 {
 	drawBackground(g);
+	drawDial(g);
 	drawNeedle(g);
 	drawBorder(g);
 	drawWindows(g);
@@ -149,14 +150,6 @@ void VUMeter::drawBackground(Graphics & g)
 	g.setColour(Colour(168, 178, 188));
 	g.fillRoundedRectangle(centerRectangle.reduced(2), centerRectangleCurveDepth);
 
-	Point<float> leftCurve(25.0f, getHeight() / 2.0f);
-	Point<float> rightCurve(getWidth() - 25.0f, getHeight()/ 2.0f);
-
-	g.setColour(Colours::black);
-	Path curve;
-	curve.addArc((float)leftCurve.getX(), (float)leftCurve.getY(), (float)rightCurve.getX() - leftCurve.getX(), 40.0f, 1.6 * MathConstants<float>::pi, 2.4f * MathConstants<float>::pi, true);
-	g.strokePath(curve, PathStrokeType(1.3f));
-
 	delete rec;
 }
 
@@ -181,6 +174,20 @@ void VUMeter::drawWindows(Graphics& g)
 
 	g.drawImage(glass, centerRectangle, false);
 }
+
+void VUMeter::drawDial(Graphics& g)
+{
+	Point<float> leftCurve(25.0f, getHeight() / 2.0f);
+	Point<float> rightCurve(getWidth() - 25.0f, getHeight() / 2.0f);
+
+	g.setColour(Colours::black);
+	Path curve;
+	curve.addArc((float)leftCurve.getX(), (float)leftCurve.getY(), (float)rightCurve.getX() - leftCurve.getX(), 40.0f, 1.6 * MathConstants<float>::pi, 2.4f * MathConstants<float>::pi, true);
+	g.strokePath(curve, PathStrokeType(1.3f));
+
+
+}
+
 
 void VUMeter::drawNeedle(Graphics& g)
 {

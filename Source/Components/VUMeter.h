@@ -41,5 +41,6 @@ private:
 	void drawBorder(Graphics& g);
 	void drawBackground(Graphics& g);
 	void drawWindows(Graphics& g);
+	void drawDial(Graphics& g);
 	void drawNeedle(Graphics& g);
 };

@@ -23,7 +23,7 @@
 class CompressorAudioProcessorEditor  : public AudioProcessorEditor
 {
 public:
-    CompressorAudioProcessorEditor (CompressorAudioProcessor&);
+    CompressorAudioProcessorEditor (CompressorAudioProcessor&, AudioProcessorValueTreeState&);
     ~CompressorAudioProcessorEditor();
 
     //==============================================================================
@@ -39,6 +39,25 @@ private:
 
 	Image iStencil;
 	VUMeter vuMeter;
+
+	Slider sAttack;
+	Slider sRelease;
+	Slider sRatio;
+	Slider sThreshold;
+
+	Label lAttack;
+	Label lRelease;
+	Label lRatio;
+	Label lThreshold;
+
+	AudioProcessorValueTreeState::SliderAttachment attackAttachment;
+	AudioProcessorValueTreeState::SliderAttachment releaseAttachment;
+	AudioProcessorValueTreeState::SliderAttachment ratioAttachment;
+	AudioProcessorValueTreeState::SliderAttachment thresholdAttachment;
+
+	AudioProcessorValueTreeState& valueTree;
+
+	void setupSlider(Slider&, Label&, const String&);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CompressorAudioProcessorEditor)
 };

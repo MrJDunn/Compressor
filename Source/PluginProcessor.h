@@ -57,6 +57,9 @@ public:
 
 	float getGain();
 private:
+
+	AudioProcessorValueTreeState parameters;
+
 	float gain = 0.0f;
 
 	void setGain(AudioBuffer<float>&);

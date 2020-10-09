@@ -12,8 +12,12 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-CompressorAudioProcessorEditor::CompressorAudioProcessorEditor (CompressorAudioProcessor& p)
-    : AudioProcessorEditor (&p), processor (p), vuMeter(p)
+CompressorAudioProcessorEditor::CompressorAudioProcessorEditor (CompressorAudioProcessor& p, AudioProcessorValueTreeState& vts)
+    : AudioProcessorEditor (&p), processor (p), vuMeter(p), valueTree(vts), 
+	attackAttachment(vts, "attack", sAttack),
+	releaseAttachment(vts, "release", sRelease),
+	ratioAttachment(vts, "ratio", sRatio),
+	thresholdAttachment(vts, "threshold", sThreshold)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -24,6 +28,11 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor (CompressorAudioP
 		iStencil = ImageFileFormat::loadFrom(stencil);
 
 	addAndMakeVisible(vuMeter);
+
+	setupSlider(sAttack, lAttack, "Attack");
+	setupSlider(sRelease, lRelease, "Release");
+	setupSlider(sRatio, lRatio, "Ratio");
+	setupSlider(sThreshold, lThreshold, "Threshold");
 }
 
 CompressorAudioProcessorEditor::~CompressorAudioProcessorEditor()
@@ -94,4 +103,35 @@ void CompressorAudioProcessorEditor::resized()
 	auto area = getLocalBounds();
 
 	vuMeter.setBounds(area.removeFromTop(190).reduced(20));
+
+	const int KNOB_HEIGHT = 80;
+	const int LABEL_HEIGHT = 40;
+
+	auto knobRow1 = area.removeFromTop(KNOB_HEIGHT);
+	auto labelRow1 = area.removeFromTop(LABEL_HEIGHT);
+	auto knobRow2 = area.removeFromTop(KNOB_HEIGHT);
+	auto labelRow2 = area.removeFromTop(LABEL_HEIGHT);
+
+	sAttack.setBounds(knobRow1.removeFromLeft(knobRow1.getWidth()/2.0f));
+	sRelease.setBounds(knobRow1.removeFromLeft(knobRow1.getWidth()));
+
+	lAttack.setBounds(labelRow1.removeFromLeft(labelRow1.getWidth() / 2.0f));
+	lRelease.setBounds(labelRow1.removeFromLeft(labelRow1.getWidth()));
+
+	sRatio.setBounds(knobRow2.removeFromLeft(knobRow2.getWidth() / 2.0f));
+	sThreshold.setBounds(knobRow2.removeFromLeft(knobRow2.getWidth()));
+
+	lRatio.setBounds(labelRow2.removeFromLeft(labelRow2.getWidth() / 2.0f));
+	lThreshold.setBounds(labelRow2.removeFromLeft(labelRow2.getWidth()));
+}
+
+void CompressorAudioProcessorEditor::setupSlider(Slider& slider, Label& label, const String& text)
+{
+	addAndMakeVisible(label);
+	label.setText(text, dontSendNotification);
+	label.setJustificationType(Justification::centred);
+
+	addAndMakeVisible(slider);
+	slider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);
+	slider.setTextBoxStyle(Slider::TextEntryBoxPosition::NoTextBox, false, 0, 0);
 }
