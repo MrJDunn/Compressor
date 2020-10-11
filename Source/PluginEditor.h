@@ -14,6 +14,7 @@
 #include "PluginProcessor.h"
 
 #include "Components/VUMeter.h"
+#include "Components/Knob.h"
 
 #include "Utility/Converter.h"
 
@@ -40,10 +41,10 @@ private:
 	Image iStencil;
 	VUMeter vuMeter;
 
-	Slider sAttack;
-	Slider sRelease;
-	Slider sRatio;
-	Slider sThreshold;
+	Knob sAttack;
+	Knob sRelease;
+	Knob sRatio;
+	Knob sThreshold;
 
 	Label lAttack;
 	Label lRelease;

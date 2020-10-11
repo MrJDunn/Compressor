@@ -12,12 +12,16 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-CompressorAudioProcessorEditor::CompressorAudioProcessorEditor (CompressorAudioProcessor& p, AudioProcessorValueTreeState& vts)
-    : AudioProcessorEditor (&p), processor (p), vuMeter(p), valueTree(vts), 
+CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioProcessor& p, AudioProcessorValueTreeState& vts)
+	: AudioProcessorEditor(&p), processor(p), vuMeter(p), valueTree(vts),
 	attackAttachment(vts, "attack", sAttack),
 	releaseAttachment(vts, "release", sRelease),
 	ratioAttachment(vts, "ratio", sRatio),
-	thresholdAttachment(vts, "threshold", sThreshold)
+	thresholdAttachment(vts, "threshold", sThreshold),
+	sAttack({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
+	sRelease({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
+	sRatio({ "1","2","3","4","5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
+	sThreshold({ "1","2","3","4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"10" })
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
