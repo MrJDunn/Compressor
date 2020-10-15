@@ -7,6 +7,9 @@
         <FILE id="Dghy77" name="Converter.h" compile="0" resource="0" file="Source/Utility/Converter.h"/>
       </GROUP>
       <GROUP id="{7E5A6212-5AC0-3A66-2BFE-7C734F16A369}" name="Components">
+        <FILE id="EFxJ5y" name="FilmstripKnob.cpp" compile="1" resource="0"
+              file="Source/Components/FilmstripKnob.cpp"/>
+        <FILE id="aISoL8" name="FilmstripKnob.h" compile="0" resource="0" file="Source/Components/FilmstripKnob.h"/>
         <FILE id="cZFnmu" name="Knob.cpp" compile="1" resource="0" file="Source/Components/Knob.cpp"/>
         <FILE id="ibBsJV" name="Knob.h" compile="0" resource="0" file="Source/Components/Knob.h"/>
         <FILE id="gMv0Ge" name="VUMeter.cpp" compile="1" resource="0" file="Source/Components/VUMeter.cpp"/>

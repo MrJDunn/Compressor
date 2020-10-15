@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Knob.cpp
-    Created: 9 Oct 2020 4:48:49pm
-    Author:  Jeff
+	Knob.cpp
+	Created: 9 Oct 2020 4:48:49pm
+	Author:  Jeff
 
   ==============================================================================
 */
@@ -42,21 +42,52 @@ void Knob::paint(Graphics & g)
 		jmin(width, height),
 		jmin(width, height));
 
-	g.fillEllipse(circleArea);
+	//g.fillEllipse(circleArea);
 
-	Image metal(Image::ARGB, 1024, 1024, true);
+	Image metal(Image::ARGB, 210, 210, true);
 	Graphics glassG(metal);
-
-	File metalFile = File("C:\\Users\\Jeff\\Pictures\\Textures\\metal3.png");
+	File metalFile = File("C:\\Users\\Jeff\\Documents\\Assetts\\Blackway FX Kit (Kontakt)\\Assets\\PNG Filmstripes 128 frames\\knob-big-black-dull.png");
 	Image metalTile = ImageCache::getFromFile(metalFile);
-
-	glassG.setTiledImageFill(metalTile, 0, 0, 1.0f);
+	glassG.setTiledImageFill(metalTile, 0, 0, 1.f);
 	glassG.fillAll();
 
 	g.drawImage(metal, area.toFloat(), false);
 
 	g.setColour(Colour(53, 57, 62));
 
-	g.fillEllipse(circleArea.reduced(8));
+	double angle = (360.0 * getValue() / getMaximum()) * (MathConstants<double>::pi / 180.0);
+	float hypotenuse = circleArea.getWidth() / 2.f;
 
+	float xCoordinate = circleArea.getWidth() / 2.f + sin(angle) * hypotenuse;
+	float yCoordinate = circleArea.getHeight() / 2.f + cos(angle) * hypotenuse;
+
+	Point<float> start(circleArea.getX() + circleArea.getWidth() / 2.f, circleArea.getY() + circleArea.getHeight() / 2.f);
+	Point<float> tip(xCoordinate, yCoordinate);
+
+	Path needle;
+	needle.startNewSubPath(start);
+	needle.lineTo(tip);
+
+	g.setColour(Colours::darkgrey);
+	g.strokePath(needle,PathStrokeType(2.0f));
+
+	//g.setColour(Colour(53, 57, 62));
+	//g.fillEllipse(circleArea.reduced(8));
+
+	// Noise on knob
+	//Image noise(Image::ARGB, width, width, true);
+	//Graphics noiseG(noise);
+
+	//AffineTransform t;
+
+	//File noiseFile = File("C:\\Users\\Jeff\\Pictures\\Textures\\SoftNoise.png");
+	//Image noiseTile = ImageCache::getFromFile(noiseFile);
+
+	//noiseG.setTiledImageFill(noiseTile, width, width, 0.0175f);
+	//noiseG.fillEllipse(circleArea.reduced(8));
+
+
+	//g.drawImageTransformed(noise, AffineTransform().rotated(-1.0f * getValue() * (360.0f / getMaximum(), width, width)));
+
+	DBG("VALUE: " + String(getValue()));
 }

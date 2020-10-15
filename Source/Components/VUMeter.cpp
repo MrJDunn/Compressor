@@ -184,8 +184,6 @@ void VUMeter::drawDial(Graphics& g)
 	Path curve;
 	curve.addArc((float)leftCurve.getX(), (float)leftCurve.getY(), (float)rightCurve.getX() - leftCurve.getX(), 40.0f, 1.6 * MathConstants<float>::pi, 2.4f * MathConstants<float>::pi, true);
 	g.strokePath(curve, PathStrokeType(1.3f));
-
-
 }
 
 
