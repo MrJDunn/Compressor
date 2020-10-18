@@ -56,10 +56,10 @@ void Knob::paint(Graphics & g)
 	g.setColour(Colour(53, 57, 62));
 
 	double angle = (360.0 * getValue() / getMaximum()) * (MathConstants<double>::pi / 180.0);
-	float hypotenuse = circleArea.getWidth() / 2.f;
+	float hypotenuse = circleArea.getWidth() / 2.f - 15.0f;
 
-	float xCoordinate = circleArea.getWidth() / 2.f + sin(angle) * hypotenuse;
-	float yCoordinate = circleArea.getHeight() / 2.f + cos(angle) * hypotenuse;
+	float xCoordinate = circleArea.getCentreX() + sin(angle - MathConstants<float>::halfPi) * hypotenuse;
+	float yCoordinate = circleArea.getCentreY() + cos(angle - MathConstants<float>::halfPi) * hypotenuse;
 
 	Point<float> start(circleArea.getX() + circleArea.getWidth() / 2.f, circleArea.getY() + circleArea.getHeight() / 2.f);
 	Point<float> tip(xCoordinate, yCoordinate);

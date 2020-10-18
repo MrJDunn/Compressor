@@ -41,7 +41,7 @@ private:
 	Image iStencil;
 	VUMeter vuMeter;
 
-	Knob sAttack;
+	Slider sAttack;
 	Knob sRelease;
 	Knob sRatio;
 	Knob sThreshold;

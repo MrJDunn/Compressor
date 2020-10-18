@@ -18,7 +18,7 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	releaseAttachment(vts, "release", sRelease),
 	ratioAttachment(vts, "ratio", sRatio),
 	thresholdAttachment(vts, "threshold", sThreshold),
-	sAttack({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
+	sAttack(/*{ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10" }*/),
 	sRelease({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
 	sRatio({ "1","2","3","4","5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
 	sThreshold({ "1","2","3","4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"10" })
