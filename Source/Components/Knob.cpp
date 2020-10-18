@@ -42,8 +42,6 @@ void Knob::paint(Graphics & g)
 		jmin(width, height),
 		jmin(width, height));
 
-	//g.fillEllipse(circleArea);
-
 	Image metal(Image::ARGB, 210, 210, true);
 	Graphics glassG(metal);
 	File metalFile = File("C:\\Users\\Jeff\\Documents\\Assetts\\Blackway FX Kit (Kontakt)\\Assets\\PNG Filmstripes 128 frames\\knob-big-black-dull.png");
@@ -53,13 +51,14 @@ void Knob::paint(Graphics & g)
 
 	g.drawImage(metal, area.toFloat(), false);
 
-	g.setColour(Colour(53, 57, 62));
 
-	double angle = (360.0 * getValue() / getMaximum()) * (MathConstants<double>::pi / 180.0);
-	float hypotenuse = circleArea.getWidth() / 2.f - 15.0f;
+	double rangeOfMotion = 270.0;
+	double offsetAngle = 179.9;
+	double angle = (rangeOfMotion * getValue() / getMaximum()) * (MathConstants<double>::pi / 180.0);
+	float hypotenuse = circleArea.getWidth() / 2.f - 17.0f;
 
-	float xCoordinate = circleArea.getCentreX() + sin(angle - MathConstants<float>::halfPi) * hypotenuse;
-	float yCoordinate = circleArea.getCentreY() + cos(angle - MathConstants<float>::halfPi) * hypotenuse;
+	float xCoordinate = circleArea.getCentreX() + sin(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
+	float yCoordinate = circleArea.getCentreY() + cos(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
 
 	Point<float> start(circleArea.getX() + circleArea.getWidth() / 2.f, circleArea.getY() + circleArea.getHeight() / 2.f);
 	Point<float> tip(xCoordinate, yCoordinate);
@@ -68,26 +67,6 @@ void Knob::paint(Graphics & g)
 	needle.startNewSubPath(start);
 	needle.lineTo(tip);
 
-	g.setColour(Colours::darkgrey);
-	g.strokePath(needle,PathStrokeType(2.0f));
-
-	//g.setColour(Colour(53, 57, 62));
-	//g.fillEllipse(circleArea.reduced(8));
-
-	// Noise on knob
-	//Image noise(Image::ARGB, width, width, true);
-	//Graphics noiseG(noise);
-
-	//AffineTransform t;
-
-	//File noiseFile = File("C:\\Users\\Jeff\\Pictures\\Textures\\SoftNoise.png");
-	//Image noiseTile = ImageCache::getFromFile(noiseFile);
-
-	//noiseG.setTiledImageFill(noiseTile, width, width, 0.0175f);
-	//noiseG.fillEllipse(circleArea.reduced(8));
-
-
-	//g.drawImageTransformed(noise, AffineTransform().rotated(-1.0f * getValue() * (360.0f / getMaximum(), width, width)));
-
-	DBG("VALUE: " + String(getValue()));
+	g.setColour(Colour(30, 30, 30));
+	g.strokePath(needle,PathStrokeType(2.0f, PathStrokeType::JointStyle::mitered,PathStrokeType::EndCapStyle::rounded));
 }
