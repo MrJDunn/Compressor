@@ -60,9 +60,16 @@ private:
 
 	AudioProcessorValueTreeState parameters;
 
-	float gain = 0.0f;
+	struct CompressorState
+	{
+		enum Mode { IDLE = 0, ATTACKING, RELEASING} mode = Mode::IDLE;
+		float gain = 0.0f;
+		double time = 0.0;
+	} compressorState;
 
-	void setGain(AudioBuffer<float>&);
+	void performCompression(AudioBuffer<float>&);
+
+	void readGain(AudioBuffer<float>&);
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CompressorAudioProcessor)

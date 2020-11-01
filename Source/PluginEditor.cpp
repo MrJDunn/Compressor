@@ -18,10 +18,10 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	releaseAttachment(vts, "release", sRelease),
 	ratioAttachment(vts, "ratio", sRatio),
 	thresholdAttachment(vts, "threshold", sThreshold),
-	sAttack({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
-	sRelease({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
-	sRatio({ "1","2","3","4","5" ,"6" ,"7" ,"8" ,"9" ,"10" }),
-	sThreshold({ "1","2","3","4" ,"5" ,"6" ,"7" ,"8" ,"9" ,"10" })
+	sAttack({ "1", "2", "3", "4", "5" }),
+	sRelease({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10", "11" }),
+	sRatio({ "-10","-5","0","+5","+10" }),
+	sThreshold({ "1","2","3" })
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -132,8 +132,11 @@ void CompressorAudioProcessorEditor::resized()
 void CompressorAudioProcessorEditor::setupSlider(Slider& slider, Label& label, const String& text)
 {
 	addAndMakeVisible(label);
+
+	Font lblFont(10.0f);
+	label.setFont(lblFont);
 	label.setText(text, dontSendNotification);
-	label.setJustificationType(Justification::centred);
+	label.setJustificationType(Justification::centredTop);
 
 	addAndMakeVisible(slider);
 	slider.setSliderStyle(Slider::RotaryHorizontalVerticalDrag);

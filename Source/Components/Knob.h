@@ -21,4 +21,5 @@ public:
 	void resized() override;
 	void paint(Graphics& g) override;
 private:
+	StringArray values;
 };

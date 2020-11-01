@@ -10,7 +10,7 @@
 
 #include "Knob.h"
 
-Knob::Knob(const StringArray& values)
+Knob::Knob(const StringArray& v): values(v)
 {
 	setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
 	Range<double> range = Range<double>(1, values.size());
@@ -42,6 +42,7 @@ void Knob::paint(Graphics & g)
 		jmin(width, height),
 		jmin(width, height));
 
+	// Draw metallic knob background
 	Image metal(Image::ARGB, 210, 210, true);
 	Graphics glassG(metal);
 	File metalFile = File("C:\\Users\\Jeff\\Documents\\Assetts\\Blackway FX Kit (Kontakt)\\Assets\\PNG Filmstripes 128 frames\\knob-big-black-dull.png");
@@ -51,7 +52,7 @@ void Knob::paint(Graphics & g)
 
 	g.drawImage(metal, area.toFloat(), false);
 
-
+	// Draw line
 	double rangeOfMotion = 270.0;
 	double offsetAngle = 179.9;
 	double angle = (rangeOfMotion * getValue() / getMaximum()) * (MathConstants<double>::pi / 180.0);
@@ -68,5 +69,34 @@ void Knob::paint(Graphics & g)
 	needle.lineTo(tip);
 
 	g.setColour(Colour(30, 30, 30));
+	g.setColour(Colour(200, 200, 200));
+
 	g.strokePath(needle,PathStrokeType(2.0f, PathStrokeType::JointStyle::mitered,PathStrokeType::EndCapStyle::rounded));
+
+	// Draw numbers
+	auto radius = circleArea.getWidth() / 2.f;
+
+	for(int i = 0; i < values.size(); ++i)
+	{
+		double vAngle = (rangeOfMotion * i / ((float)values.size() - 1.f)) * (MathConstants<double>::pi / 180.0);
+
+		float xPos = circleArea.getCentreX() + sin(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * radius;
+		float yPos = circleArea.getCentreY() + cos(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * radius;
+
+		Rectangle<float> position(xPos, yPos, 2.f,2.f);
+		g.fillEllipse(position);
+
+		float additionalSizeForText = 7.5f;
+
+		float xPosText = circleArea.getCentreX() + sin(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * (radius + additionalSizeForText);
+		float yPosText = circleArea.getCentreY() + cos(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * (radius + additionalSizeForText);
+
+		Rectangle<float> textPos(xPosText, yPosText, 20.f, 20.f);
+
+		Font txtFont(7.5f);
+		g.setFont(txtFont);
+		//g.drawText(values[i], textPos, Justification::topLeft);
+		
+
+	}
 }
