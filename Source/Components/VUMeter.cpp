@@ -199,12 +199,13 @@ void VUMeter::drawDial(Graphics& g)
 
 	Point<float> start(getWidth() / 2.0f - 2.0f, getHeight() - 4.f);
 
-	int numLines = 10;
-	float radius = 70.f;
-	float stepDeg = (45.f / numLines) * (180.f / MathConstants<float>::pi);
+	std::vector<String> values{ "2", "1", "0", "-1", "-2", "-3", "-5", "-7", "-10", "-20" };
+
+	float radius = 80.f;
+	float stepDeg = (45.f / values.size()) * (180.f / MathConstants<float>::pi);
 	float offset = 14.75f;// *(180.f / MathConstants<float>::pi);
 
-	for(int i = 0; i < numLines; ++i)
+	for(int i = 0; i < values.size(); ++i)
 	{
 		g.setColour(Colour(53, 57, 62));
 		if(i < 2)
@@ -217,7 +218,12 @@ void VUMeter::drawDial(Graphics& g)
 		tip.addXY(start.getX(), start.getY());
 		Line<float> line(start, tip);
 
-		//line = std::move(line.withShortenedEnd(sin(i * MathConstants<float>::halfPi) * 30.f));
+		Font tmpFont = g.getCurrentFont();
+		tmpFont.setSizeAndStyle(9.f, tmpFont.getDefaultStyle(), tmpFont.getHorizontalScale(), tmpFont.getExtraKerningFactor());
+		g.setFont(tmpFont);
+		g.drawText(values[i], { tip.withX(tip.getX() - 10).withY(tip.getY() - 10), tip.withX(tip.getX() + 10).withY(tip.getY() + 10) }, Justification::centred);
+
+		line = std::move(line.withShortenedEnd(i % 2 ? 10.f : 15.f));
 		line = std::move(line.withShortenedStart(60.f));
 
 		Path needle;
