@@ -18,10 +18,10 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	releaseAttachment(vts, "release", sRelease),
 	ratioAttachment(vts, "ratio", sRatio),
 	thresholdAttachment(vts, "threshold", sThreshold),
-	sAttack({ "1", "2", "3", "4", "5" }),
-	sRelease({ "1", "2", "3", "4", "5" ,"6" ,"7" ,"8" ,"9" ,"10", "11" }),
-	sRatio({ "-10","-5","0","+5","+10" }),
-	sThreshold({ "1","2","3" })
+	sAttack({ "-", "", "", "", "+" }),
+	sRelease({ "-", "", "", "", "" ,"" ,"" ,"" ,"" ,"", "+" }),
+	sRatio({ "-","","","","+" }),
+	sThreshold({ "-","","","","","","+" })
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -58,6 +58,9 @@ void CompressorAudioProcessorEditor::paint (Graphics& g)
 		true
 	));
 	g.fillAll();
+
+	g.setColour(Colour::fromRGBA(10,20,10,100));
+	g.drawRoundedRectangle({ 20, 177, 230, 250 }, 15.f, 1.f);
 
 	Image noise(Image::ARGB, getWidth(), getHeight(), true);
 	Graphics noiseG(noise);

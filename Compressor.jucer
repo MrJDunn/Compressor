@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="jyLrc7" name="Compressor" projectType="audioplug" jucerVersion="5.4.3">
-  <MAINGROUP id="swlQGZ" name="Compressor">
+<JUCERPROJECT id="jyLrc7" name="Chop" projectType="audioplug" jucerVersion="5.4.3"
+              pluginManufacturerCode="AmcY" pluginCode="CH0p" pluginManufacturer="Audimancy">
+  <MAINGROUP id="swlQGZ" name="Chop">
     <GROUP id="{C9B6531F-6F86-528A-761B-83BC156E8164}" name="Source">
       <GROUP id="{AEFBBA76-B962-5FBD-E622-7521948DC859}" name="Utility">
         <FILE id="Dghy77" name="Converter.h" compile="0" resource="0" file="Source/Utility/Converter.h"/>

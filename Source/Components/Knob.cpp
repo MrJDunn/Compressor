@@ -55,14 +55,33 @@ void Knob::paint(Graphics & g)
 	// Draw line
 	double rangeOfMotion = 270.0;
 	double offsetAngle = 179.9;
-	double angle = (rangeOfMotion * getValue() / getMaximum()) * (MathConstants<double>::pi / 180.0);
+
+	double value = getValue();
+	if(snapping)
+	{
+		//TODO figure out a way to calculate this that isn't O(n)
+		double interval = getMaximum() / double(values.size() - 1);
+		double target = 0.f;
+		
+		while(target < value)
+		{
+			target += interval;
+		}
+
+		value = target;
+	}
+
+	double angle = (rangeOfMotion * value / getMaximum()) * (MathConstants<double>::pi / 180.0);
 	float hypotenuse = circleArea.getWidth() / 2.f - 17.0f;
 
-	float xCoordinate = circleArea.getCentreX() + sin(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
-	float yCoordinate = circleArea.getCentreY() + cos(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
+	float xTip = circleArea.getCentreX() + sin(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
+	float yTip = circleArea.getCentreY() + cos(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
 
-	Point<float> start(circleArea.getX() + circleArea.getWidth() / 2.f, circleArea.getY() + circleArea.getHeight() / 2.f);
-	Point<float> tip(xCoordinate, yCoordinate);
+	float xStart = circleArea.getCentreX() + sin(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * (hypotenuse / 6.f);
+	float yStart = circleArea.getCentreY() + cos(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * (hypotenuse / 6.f);
+
+	Point<float> start(xStart, yStart);
+	Point<float> tip(xTip, yTip);
 
 	Path needle;
 	needle.startNewSubPath(start);
@@ -87,16 +106,19 @@ void Knob::paint(Graphics & g)
 		g.fillEllipse(position);
 
 		float additionalSizeForText = 7.5f;
-
+		float textSize = 10.f;
 		float xPosText = circleArea.getCentreX() + sin(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * (radius + additionalSizeForText);
 		float yPosText = circleArea.getCentreY() + cos(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * (radius + additionalSizeForText);
 
-		Rectangle<float> textPos(xPosText, yPosText, 20.f, 20.f);
+		Rectangle<float> textPosition(xPosText, yPosText, textSize, textSize / 2.f);
 
-		Font txtFont(7.5f);
+		Font txtFont(textSize);
 		g.setFont(txtFont);
-		//g.drawText(values[i], textPos, Justification::topLeft);
-		
-
+		g.drawText(values[i], textPosition, Justification::left);
 	}
+}
+
+void Knob::setSnapping(bool val)
+{
+	snapping = val;
 }

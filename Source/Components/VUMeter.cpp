@@ -177,13 +177,63 @@ void VUMeter::drawWindows(Graphics& g)
 
 void VUMeter::drawDial(Graphics& g)
 {
-	Point<float> leftCurve(25.0f, getHeight() / 2.0f);
-	Point<float> rightCurve(getWidth() - 25.0f, getHeight() / 2.0f);
+	// Center arc
+	Point<float> leftPointCenter(50.0f, getHeight() / 1.75f);
+	Point<float> rightPointCenter(getWidth() - 50.0f, getHeight() / 1.75f);
 
-	g.setColour(Colours::black);
+	g.setColour(Colour(53, 57, 62));
 	Path curve;
-	curve.addArc((float)leftCurve.getX(), (float)leftCurve.getY(), (float)rightCurve.getX() - leftCurve.getX(), 40.0f, 1.6 * MathConstants<float>::pi, 2.4f * MathConstants<float>::pi, true);
+	curve.addArc((float)leftPointCenter.getX(), (float)leftPointCenter.getY(), (float)rightPointCenter.getX() - leftPointCenter.getX(),
+		145.f, 1.7f * MathConstants<float>::pi, 2.3f * MathConstants<float>::pi, true);
 	g.strokePath(curve, PathStrokeType(1.3f));
+
+	// Red arc
+	Point<float> leftPointRed(50.0f, getHeight() / 1.75f);
+	Point<float> rightPointRed(getWidth() - 50.0f, getHeight() / 1.75f);
+
+	g.setColour(Colours::red.darker());
+	Path redZone;
+	redZone.addArc((float)leftPointRed.getX() + 1.f, (float)leftPointRed.getY(), (float)rightPointRed.getX() - leftPointRed.getX(),
+		145.f, 2.2f * MathConstants<float>::pi, 2.3f * MathConstants<float>::pi, true);
+	g.strokePath(redZone, PathStrokeType(4.5f));
+
+	Point<float> start(getWidth() / 2.0f - 2.0f, getHeight() - 4.f);
+
+	int numLines = 10;
+	float radius = 70.f;
+	float stepDeg = (45.f / numLines) * (180.f / MathConstants<float>::pi);
+	float offset = 14.75f;// *(180.f / MathConstants<float>::pi);
+
+	for(int i = 0; i < numLines; ++i)
+	{
+		g.setColour(Colour(53, 57, 62));
+		if(i < 2)
+		{
+			g.setColour(Colours::red.darker());
+		}
+		//Point<float> tip((i * getWidth()) / 10.f, 50.0f);
+
+		Point<float> tip(radius * sin(offset + stepDeg * i), radius * cos(offset + stepDeg * i));
+		tip.addXY(start.getX(), start.getY());
+		Line<float> line(start, tip);
+
+		//line = std::move(line.withShortenedEnd(sin(i * MathConstants<float>::halfPi) * 30.f));
+		line = std::move(line.withShortenedStart(60.f));
+
+		Path needle;
+		needle.startNewSubPath(line.getStart());
+		needle.lineTo(line.getEnd());
+
+		g.strokePath(needle, PathStrokeType {1.f});
+	}
+
+	g.setColour(Colour(53, 57, 62));
+	Path whiteOut;
+	whiteOut.addArc((float)leftPointCenter.getX(), (float)leftPointCenter.getY(), (float)rightPointCenter.getX() - leftPointCenter.getX(),
+		70.f, 1.6 * MathConstants<float>::pi, 2.4f * MathConstants<float>::pi, true);
+	//g.fillPath(whiteOut);
+
+
 }
 
 
@@ -191,9 +241,9 @@ void VUMeter::drawNeedle(Graphics& g)
 {
 	g.setColour(Colour(53,57,62));
 
-	Point<float> start(getWidth() / 2.0f - 2.0f, getHeight() * 1.33f);
+	Point<float> start(getWidth() / 2.0f - 2.0f, getHeight() - 4.f);
 	Point<float> tip((float)1000 * needleValue * getWidth(), 50.0f);
-	Point<float> end(getWidth() / 2.0f + 2.0f, getHeight() * 1.33f);
+	Point<float> end(getWidth() / 2.0f + 2.0f, getHeight() - 4.f);
 
 	Path needle;
 	needle.startNewSubPath(start);

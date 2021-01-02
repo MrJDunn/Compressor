@@ -207,8 +207,10 @@ void CompressorAudioProcessor::performCompression(AudioBuffer<float>& buffer)
 
 	float attack = (float) parameters.getParameterAsValue("attack").getValue() * 10000.f;
 	float release = (float)parameters.getParameterAsValue("release").getValue() * 10000.f;
-	float ratio = (float)parameters.getParameterAsValue("ratio").getValue() ;
+	float ratio = (float)parameters.getParameterAsValue("ratio").getValue() * 10.f ;
 	float threshold = (float)parameters.getParameterAsValue("threshold").getValue();
+
+	readGain(buffer);
 
 	switch(compressorState.mode)
 	{
@@ -237,7 +239,6 @@ void CompressorAudioProcessor::performCompression(AudioBuffer<float>& buffer)
 	default:
 		break;
 	}
-	readGain(buffer);
 }
 
 void CompressorAudioProcessor::readGain(AudioBuffer<float>& buffer)

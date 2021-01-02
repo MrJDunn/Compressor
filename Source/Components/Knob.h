@@ -20,6 +20,10 @@ public:
 
 	void resized() override;
 	void paint(Graphics& g) override;
+
+	void setSnapping(bool);
 private:
 	StringArray values;
+
+	bool snapping = true;
 };
