@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "../../Compressor/Source/DSP/CompressorBase.h"
 
 //==============================================================================
 /**
@@ -59,6 +60,8 @@ public:
 private:
 
 	AudioProcessorValueTreeState parameters;
+
+	CompressorBase compressor;
 
 	struct CompressorState
 	{

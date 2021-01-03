@@ -13,7 +13,10 @@
 
 //==============================================================================
 CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioProcessor& p, AudioProcessorValueTreeState& vts)
-	: AudioProcessorEditor(&p), processor(p), vuMeter(p), valueTree(vts),
+	: AudioProcessorEditor(&p), 
+	processor(p), 
+	//vuMeter(p), 
+	valueTree(vts),
 	attackAttachment(vts, "attack", sAttack),
 	releaseAttachment(vts, "release", sRelease),
 	ratioAttachment(vts, "ratio", sRatio),
@@ -31,7 +34,7 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	if(stencil.existsAsFile())
 		iStencil = ImageFileFormat::loadFrom(stencil);
 
-	addAndMakeVisible(vuMeter);
+	//addAndMakeVisible(vuMeter);
 
 	setupSlider(sAttack, lAttack, "Attack");
 	setupSlider(sRelease, lRelease, "Release");
@@ -109,7 +112,7 @@ void CompressorAudioProcessorEditor::resized()
     // subcomponents in your editor..
 	auto area = getLocalBounds();
 
-	vuMeter.setBounds(area.removeFromTop(190).reduced(20));
+	//vuMeter.setBounds(area.removeFromTop(190).reduced(20));
 
 	const int KNOB_HEIGHT = 80;
 	const int LABEL_HEIGHT = 40;

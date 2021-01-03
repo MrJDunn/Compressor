@@ -26,7 +26,7 @@ CompressorAudioProcessor::CompressorAudioProcessor()
 			std::make_unique<AudioParameterFloat> ("attack", "Attack", 0.0f, 1.0f, 0.5f),
 			std::make_unique<AudioParameterFloat> ("release", "Release", 0.0f, 1.0f, 0.5f),
 			std::make_unique<AudioParameterFloat> ("ratio", "Ratio", 0.0f, 1.0f, 0.5f),
-			std::make_unique<AudioParameterFloat> ("threshold", "Threshold", 0.0f, 1.0f, 0.5f)
+			std::make_unique<AudioParameterFloat> ("threshold", "Threshold", -0.99f, 0.99f, 0.0f)
 		})
 #endif
 {
@@ -138,33 +138,21 @@ bool CompressorAudioProcessor::isBusesLayoutSupported (const BusesLayout& layout
 void CompressorAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+	//readGain(buffer);
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
+	float attack = (float)parameters.getParameterAsValue("attack").getValue() * 10000.f;
+	float release = (float)parameters.getParameterAsValue("release").getValue() * 10000.f;
+	float ratio = (float)parameters.getParameterAsValue("ratio").getValue() * 10.f;
+	float threshold = 20 * log10((float)parameters.getParameterAsValue("threshold").getValue());
 
-        // ..do something to the data...
-    }
-
-	readGain(buffer);
-	performCompression(buffer);
+	compressor.setAttack(attack);
+	compressor.setRelease(release);
+	compressor.setRatio(ratio);
+	compressor.setThreshold(threshold);
+	
+	compressor.process(buffer);
+	//performCompression(buffer);
 }
 
 //==============================================================================

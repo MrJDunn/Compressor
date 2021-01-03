@@ -204,7 +204,7 @@ void VUMeter::drawDial(Graphics& g)
 	float radius = 80.f;
 	float stepDeg = (45.f / values.size()) * (180.f / MathConstants<float>::pi);
 	float offset = 14.75f;// *(180.f / MathConstants<float>::pi);
-
+	
 	for(int i = 0; i < values.size(); ++i)
 	{
 		g.setColour(Colour(53, 57, 62));
