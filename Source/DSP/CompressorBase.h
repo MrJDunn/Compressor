@@ -47,10 +47,10 @@ protected:
 	float threshold;
 
 private:
-	double attackAlpha = 0.99;
-	double releaseAlpha = 0.99;
+	float attackAlpha = 0.99f;
+	float releaseAlpha = 0.99f;
 
-	double gainSmoothPrevious = 0.0;
+	float gainSmoothPrevious = 0.0f;
 
 	double sampleRate = 44100.0;
 	int blockSize = 512;

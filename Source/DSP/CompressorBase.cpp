@@ -19,50 +19,48 @@ void CompressorBase::process(AudioBuffer<float>& buffer)
 	int channels = buffer.getNumChannels();
 	int bufferSize = buffer.getNumSamples();
 
-	for(int i = 0; i < channels; ++i)
+	attackAlpha = exp(-1.f / (sampleRate * 0.001f * attack));
+	releaseAlpha = exp(-1.f / (sampleRate * 0.001f * release));
+
+	for (int i = 0; i < channels; ++i)
 	{
 		float* channelData = buffer.getWritePointer(i);
-		for(int j = 0; j < bufferSize; ++j)
+		for (int j = 0; j < bufferSize; ++j)
 		{
-			// Calculate absolute db value of sample
+			// Calculate db value of sample
 			float unipolarInput = abs(channelData[j]);
-			
-			float sampleDb = 20 * log10(unipolarInput/1.f);
-			if(sampleDb < minimumDb)
-			{
-				sampleDb = minimumDb;
-			}
+			float inputDb = 20 * log10(unipolarInput);
 
+			// Avoid negative infinity
+			inputDb = std::max(inputDb, minimumDb);
 
-			float gain = sampleDb;
-			if(sampleDb > threshold)
-			{
-				gain =  threshold + ((sampleDb - threshold) / ratio);
-			}
+			// Calculate new target gain if greater than threshold
+			float outputDb = inputDb > threshold ? threshold + ((inputDb - threshold) / ratio) : inputDb;
 
-			float reductionAmount = sampleDb - gain;
+			float reductionAmount = inputDb - outputDb;
+
+		//	DBG(reductionAmount);
 
 			float gainSmooth = 0.f;
-			if(reductionAmount < gainSmoothPrevious)
+
+			if (reductionAmount < gainSmoothPrevious)
 			{
 				// Attack
-				attackAlpha =  pow(MathConstants<float>::euler, (-log(10)/ (sampleRate * attack / 5.f)));
-				gainSmooth = (1.f - attackAlpha) * reductionAmount + (attackAlpha * gainSmoothPrevious);
+				gainSmooth = (((1.f - attackAlpha) * reductionAmount) + (attackAlpha * gainSmoothPrevious));
 			}
 			else
 			{
 				// Release
-				releaseAlpha = pow(MathConstants<float>::euler, (-log(10) / (sampleRate * release / 5.f)));
-				gainSmooth = (1.f - releaseAlpha) * reductionAmount + (releaseAlpha * gainSmoothPrevious);
+				gainSmooth = (((1.f - releaseAlpha) * reductionAmount) + (releaseAlpha * gainSmoothPrevious));
 			}
 
-			float newSampleValue = powf(10.f, (gainSmooth / 20.f)) * channelData[i];
+			float newSampleValue = powf(10.f, (gainSmooth / 20.f));
 
-			// TODO: Get to the root of why this is leaving the range at all
 			//newSampleValue = std::max(-1.f,std::min(1.f,newSampleValue));
-		//	jassert(newSampleValue <= 1.f && newSampleValue >= -1.f);
-			channelData[i] = newSampleValue;
-			
+			//jassert(newSampleValue <= 1.f && newSampleValue >= -1.f);
+
+			channelData[j] *= newSampleValue;
+
 			gainSmoothPrevious = gainSmooth;
 
 		}
