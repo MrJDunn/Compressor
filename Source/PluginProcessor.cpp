@@ -26,7 +26,7 @@ CompressorAudioProcessor::CompressorAudioProcessor()
 			std::make_unique<AudioParameterFloat> ("attack", "Attack", 0.0f, 1.0f, 0.5f),
 			std::make_unique<AudioParameterFloat> ("release", "Release", 0.0f, 1.0f, 0.5f),
 			std::make_unique<AudioParameterFloat> ("ratio", "Ratio", 0.0f, 1.0f, 0.5f),
-			std::make_unique<AudioParameterFloat> ("threshold", "Threshold", -0.99f, 0.99f, 0.0f)
+			std::make_unique<AudioParameterFloat> ("threshold", "Threshold", 0.0f, 1.0f, 0.5f)
 		})
 #endif
 {
@@ -139,11 +139,11 @@ void CompressorAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
 {
     ScopedNoDenormals noDenormals;
 
-	//readGain(buffer);
+	readGain(buffer);
 
-	float attack = (float)parameters.getParameterAsValue("attack").getValue() * 10000.f;
-	float release = (float)parameters.getParameterAsValue("release").getValue() * 10000.f;
-	float ratio = (float)parameters.getParameterAsValue("ratio").getValue() * 10.f;
+	float attack = (float)parameters.getParameterAsValue("attack").getValue();
+	float release = (float)parameters.getParameterAsValue("release").getValue();
+	float ratio = 1.f + (float)parameters.getParameterAsValue("ratio").getValue() * 15.f;
 	float threshold = 20 * log10((float)parameters.getParameterAsValue("threshold").getValue());
 
 	compressor.setAttack(attack);
@@ -152,13 +152,13 @@ void CompressorAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
 	compressor.setThreshold(threshold);
 	
 	compressor.process(buffer);
-	//performCompression(buffer);
+
 }
 
 //==============================================================================
 bool CompressorAudioProcessor::hasEditor() const
 {
-    return true; // (change this to false if you choose to not supply an editor)
+    return true; 
 }
 
 AudioProcessorEditor* CompressorAudioProcessor::createEditor()

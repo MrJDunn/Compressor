@@ -26,8 +26,14 @@ public:
 
 
 protected:
+	/**
+		0 < attack < 5
+	*/
 	float attack;
 
+	/**
+		0 < release < 5
+	*/
 	float release;
 
 	/**
@@ -41,6 +47,11 @@ protected:
 	float threshold;
 
 private:
+	double attackAlpha = 0.99;
+	double releaseAlpha = 0.99;
+
+	double gainSmoothPrevious = 0.0;
+
 	double sampleRate = 44100.0;
 	int blockSize = 512;
 

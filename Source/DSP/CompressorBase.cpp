@@ -25,29 +25,58 @@ void CompressorBase::process(AudioBuffer<float>& buffer)
 		for(int j = 0; j < bufferSize; ++j)
 		{
 			// Calculate absolute db value of sample
-			float sampleDb = 20 * log10(abs(channelData[j]));
+			float unipolarInput = abs(channelData[j]);
+			
+			float sampleDb = 20 * log10(unipolarInput/1.f);
 			if(sampleDb < minimumDb)
 			{
 				sampleDb = minimumDb;
 			}
 
-			// If we are beyond our threshold, compress signal by ratio
+
+			float gain = sampleDb;
 			if(sampleDb > threshold)
 			{
-				channelData[i] = threshold + (sampleDb / ratio);
+				gain =  threshold + ((sampleDb - threshold) / ratio);
 			}
+
+			float reductionAmount = sampleDb - gain;
+
+			float gainSmooth = 0.f;
+			if(reductionAmount < gainSmoothPrevious)
+			{
+				// Attack
+				attackAlpha =  pow(MathConstants<float>::euler, (-log(10)/ (sampleRate * attack / 5.f)));
+				gainSmooth = (1.f - attackAlpha) * reductionAmount + (attackAlpha * gainSmoothPrevious);
+			}
+			else
+			{
+				// Release
+				releaseAlpha = pow(MathConstants<float>::euler, (-log(10) / (sampleRate * release / 5.f)));
+				gainSmooth = (1.f - releaseAlpha) * reductionAmount + (releaseAlpha * gainSmoothPrevious);
+			}
+
+			float newSampleValue = powf(10.f, (gainSmooth / 20.f)) * channelData[i];
+
+			// TODO: Get to the root of why this is leaving the range at all
+			//newSampleValue = std::max(-1.f,std::min(1.f,newSampleValue));
+		//	jassert(newSampleValue <= 1.f && newSampleValue >= -1.f);
+			channelData[i] = newSampleValue;
+			
+			gainSmoothPrevious = gainSmooth;
+
 		}
 	}
 }
 
 void CompressorBase::setAttack(float val)
 {
-	attack = val;
+	attack = std::min(5.f,std::max(1.f, val * 5.f));
 }
 
 void CompressorBase::setRelease(float val)
 {
-	release = val;
+	release = std::min(5.f,std::max(1.f, val * 5.f));
 }
 
 void CompressorBase::setRatio(float val)
@@ -79,3 +108,4 @@ float CompressorBase::getThreshold()
 {
 	return threshold;
 }
+

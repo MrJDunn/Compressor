@@ -13,7 +13,7 @@
 VUMeter::VUMeter(CompressorAudioProcessor& p): processor(p)
 {
 	setOpaque(false);
-	setFramesPerSecond(30);
+	setFramesPerSecond(15);
 }
 
 VUMeter::~VUMeter()

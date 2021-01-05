@@ -50,17 +50,19 @@ void Knob::paint(Graphics & g)
 	glassG.setTiledImageFill(metalTile, 0, 0, 1.f);
 	glassG.fillAll();
 
-	g.drawImage(metal, area.toFloat(), false);
+	g.drawImage(metal, area.reduced(12.f).toFloat(), false);
 
 	// Draw line
 	double rangeOfMotion = 270.0;
 	double offsetAngle = 179.9;
 
 	double value = getValue();
+	double max = getMaximum();
+
 	if(snapping)
 	{
 		//TODO figure out a way to calculate this that isn't O(n)
-		double interval = getMaximum() / double(values.size() - 1);
+		double interval = max / double(values.size() - 1);
 		double target = 0.f;
 		
 		while(target < value)
@@ -71,8 +73,8 @@ void Knob::paint(Graphics & g)
 		value = target;
 	}
 
-	double angle = (rangeOfMotion * value / getMaximum()) * (MathConstants<double>::pi / 180.0);
-	float hypotenuse = circleArea.getWidth() / 2.f - 17.0f;
+	double angle = (rangeOfMotion * value / max) * (MathConstants<double>::pi / 180.0);
+	float hypotenuse = circleArea.getWidth() / 2.f - 28.0f;
 
 	float xTip = circleArea.getCentreX() + sin(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
 	float yTip = circleArea.getCentreY() + cos(offsetAngle + -1 * angle + MathConstants<float>::halfPi) * hypotenuse;
@@ -101,20 +103,34 @@ void Knob::paint(Graphics & g)
 
 		float xPos = circleArea.getCentreX() + sin(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * radius;
 		float yPos = circleArea.getCentreY() + cos(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * radius;
+		
+		Line<float> line({float(area.getCentreX()), float(area.getCentreY()) }, { xPos, yPos });
 
-		Rectangle<float> position(xPos, yPos, 2.f,2.f);
-		g.fillEllipse(position);
+		// Draw dot
+		Line<float> dotLine = line.withShortenedEnd(12.f);
+		Point<float> topLeftDot = dotLine.getEnd();
+		Point<float> bottomRightDot = dotLine.getEnd();
+		topLeftDot.addXY(-1.5f,-1.5f);
+		bottomRightDot.addXY(1.5f,1.5f);
+		Rectangle<float> dotPosition(topLeftDot,bottomRightDot);
 
+		g.fillEllipse(dotPosition);
+
+		// Draw text
 		float additionalSizeForText = 7.5f;
-		float textSize = 10.f;
-		float xPosText = circleArea.getCentreX() + sin(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * (radius + additionalSizeForText);
-		float yPosText = circleArea.getCentreY() + cos(offsetAngle + -1 * vAngle + MathConstants<float>::halfPi) * (radius + additionalSizeForText);
+		float textSize = 8.f;
 
-		Rectangle<float> textPosition(xPosText, yPosText, textSize, textSize / 2.f);
-
+		Line<float> textLine = line.withShortenedEnd(2.f);
+		Point<float> topLeftText = textLine.getEnd();
+		Point<float> bottomRightText = textLine.getEnd();
+		topLeftText.addXY(-10.f,-10.f);
+		bottomRightText.addXY(10.f,10.f);
+		Rectangle<float> textPosition(topLeftText,bottomRightText);
+		
 		Font txtFont(textSize);
 		g.setFont(txtFont);
-		g.drawText(values[i], textPosition, Justification::left);
+		g.drawText(values[i], textPosition, Justification::centred);
+	
 	}
 }
 

@@ -39,7 +39,7 @@ private:
     CompressorAudioProcessor& processor;
 
 	Image iStencil;
-	//VUMeter vuMeter;
+	VUMeter vuMeter;
 
 	Knob sAttack;
 	Knob sRelease;

@@ -15,7 +15,7 @@
 CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioProcessor& p, AudioProcessorValueTreeState& vts)
 	: AudioProcessorEditor(&p), 
 	processor(p), 
-	//vuMeter(p), 
+	vuMeter(p), 
 	valueTree(vts),
 	attackAttachment(vts, "attack", sAttack),
 	releaseAttachment(vts, "release", sRelease),
@@ -23,8 +23,8 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	thresholdAttachment(vts, "threshold", sThreshold),
 	sAttack({ "-", "", "", "", "+" }),
 	sRelease({ "-", "", "", "", "" ,"" ,"" ,"" ,"" ,"", "+" }),
-	sRatio({ "-","","","","+" }),
-	sThreshold({ "-","","","","","","+" })
+	sRatio({ "1:1","4:1","8:1","12:1","16:1" }),
+	sThreshold({ "-144","","-108","","-72","","-36","","0" })
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -34,12 +34,14 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	if(stencil.existsAsFile())
 		iStencil = ImageFileFormat::loadFrom(stencil);
 
-	//addAndMakeVisible(vuMeter);
+	addAndMakeVisible(vuMeter);
 
 	setupSlider(sAttack, lAttack, "Attack");
 	setupSlider(sRelease, lRelease, "Release");
 	setupSlider(sRatio, lRatio, "Ratio");
-	setupSlider(sThreshold, lThreshold, "Threshold");
+	setupSlider(sThreshold, lThreshold, "Threshold db");
+
+	sThreshold.setSnapping(false);
 }
 
 CompressorAudioProcessorEditor::~CompressorAudioProcessorEditor()
@@ -112,9 +114,9 @@ void CompressorAudioProcessorEditor::resized()
     // subcomponents in your editor..
 	auto area = getLocalBounds();
 
-	//vuMeter.setBounds(area.removeFromTop(190).reduced(20));
+	vuMeter.setBounds(area.removeFromTop(190).reduced(20));
 
-	const int KNOB_HEIGHT = 80;
+	const int KNOB_HEIGHT = 100;
 	const int LABEL_HEIGHT = 40;
 
 	auto knobRow1 = area.removeFromTop(KNOB_HEIGHT);
