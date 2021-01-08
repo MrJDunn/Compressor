@@ -36,6 +36,8 @@ private:
 
 	const float bevelDepthX = 15.0f;
 	const float bevelDepthY = 10.0f;
+	float defaultAngle = 0.f;
+	float radianMultiplier = 0.f;
 
 	//============================================================================
 	void drawBorder(Graphics& g);
@@ -43,4 +45,5 @@ private:
 	void drawWindows(Graphics& g);
 	void drawDial(Graphics& g);
 	void drawNeedle(Graphics& g);
+
 };

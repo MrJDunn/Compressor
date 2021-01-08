@@ -24,6 +24,7 @@ public:
 	float getRatio();
 	float getThreshold();
 
+	float getCompressionAmountDB();
 
 protected:
 	/**
@@ -54,7 +55,8 @@ private:
 
 	double sampleRate = 44100.0;
 	int blockSize = 512;
-
-	float minimumDb = -144.f;
+	float reductionAmount = 0.f;
+	float minimumDb = -96.f;
+	float lastGreatestReductionAmount = 0.f;
 };
 

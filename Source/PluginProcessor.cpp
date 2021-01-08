@@ -185,7 +185,7 @@ void CompressorAudioProcessor::setStateInformation (const void* data, int sizeIn
 
 float CompressorAudioProcessor::getGain()
 {
-	return compressorState.gain;
+	return compressor.getCompressionAmountDB();
 }
 
 void CompressorAudioProcessor::performCompression(AudioBuffer<float>& buffer)

@@ -13,7 +13,11 @@
 VUMeter::VUMeter(CompressorAudioProcessor& p): processor(p)
 {
 	setOpaque(false);
-	setFramesPerSecond(15);
+	setFramesPerSecond(30);
+
+	radianMultiplier = MathConstants<float>::pi / 180.f;
+	defaultAngle = 330.f * radianMultiplier;
+	needleValue = defaultAngle;
 }
 
 VUMeter::~VUMeter()
@@ -22,7 +26,6 @@ VUMeter::~VUMeter()
 
 void VUMeter::update()
 {
-	needleValue = processor.getGain();
 	repaint();
 }
 
@@ -237,9 +240,6 @@ void VUMeter::drawDial(Graphics& g)
 	Path whiteOut;
 	whiteOut.addArc((float)leftPointCenter.getX(), (float)leftPointCenter.getY(), (float)rightPointCenter.getX() - leftPointCenter.getX(),
 		70.f, 1.6 * MathConstants<float>::pi, 2.4f * MathConstants<float>::pi, true);
-	//g.fillPath(whiteOut);
-
-
 }
 
 
@@ -247,15 +247,26 @@ void VUMeter::drawNeedle(Graphics& g)
 {
 	g.setColour(Colour(53,57,62));
 
-	Point<float> start(getWidth() / 2.0f - 2.0f, getHeight() - 4.f);
-	Point<float> tip((float)1000 * needleValue * getWidth(), 50.0f);
-	Point<float> end(getWidth() / 2.0f + 2.0f, getHeight() - 4.f);
+	if(processor.getGain() == 0.0f)
+	{
+		if(needleValue < defaultAngle)
+		{
+			needleValue += 0.01f;
+		}
+	}
+	else 
+	{
+		needleValue = (330.f - processor.getGain()) * radianMultiplier;
+	}
 
-	Path needle;
-	needle.startNewSubPath(start);
-	needle.lineTo(tip);
-	needle.lineTo(end);
-	needle.closeSubPath();
+	float angle = 210.f * radianMultiplier + fmod(needleValue, 120.f * radianMultiplier);
 
-	g.fillPath(needle);
+	float centreX = getWidth() / 2.0f - 2.0f;
+	float centreY = getHeight() -4.f;
+	float radius = 100.f;
+
+	float tipX = centreX + radius * cos(angle);
+	float tipY = centreY + radius * sin(angle);
+
+	g.drawLine({centreX, centreY, tipX, tipY});
 }

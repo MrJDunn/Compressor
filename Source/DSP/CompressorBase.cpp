@@ -22,6 +22,8 @@ void CompressorBase::process(AudioBuffer<float>& buffer)
 	attackAlpha = exp(-1.f / (sampleRate * 0.001f * attack));
 	releaseAlpha = exp(-1.f / (sampleRate * 0.001f * release));
 
+	lastGreatestReductionAmount = 0.f;
+	
 	for (int i = 0; i < channels; ++i)
 	{
 		float* channelData = buffer.getWritePointer(i);
@@ -37,8 +39,9 @@ void CompressorBase::process(AudioBuffer<float>& buffer)
 			// Calculate new target gain if greater than threshold
 			float outputDb = inputDb > threshold ? threshold + ((inputDb - threshold) / ratio) : inputDb;
 
-			float reductionAmount = inputDb - outputDb;
+			reductionAmount = inputDb - outputDb;
 
+			lastGreatestReductionAmount = std::max(reductionAmount, lastGreatestReductionAmount);
 		//	DBG(reductionAmount);
 
 			float gainSmooth = 0.f;
@@ -105,5 +108,10 @@ float CompressorBase::getRatio()
 float CompressorBase::getThreshold()
 {
 	return threshold;
+}
+
+float CompressorBase::getCompressionAmountDB()
+{
+	return lastGreatestReductionAmount;
 }
 
