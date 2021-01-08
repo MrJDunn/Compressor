@@ -21,8 +21,8 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	releaseAttachment(vts, "release", sRelease),
 	ratioAttachment(vts, "ratio", sRatio),
 	thresholdAttachment(vts, "threshold", sThreshold),
-	sAttack({ "-", "", "", "", "+" }),
-	sRelease({ "-", "", "", "", "" ,"" ,"" ,"" ,"" ,"", "+" }),
+	sAttack({ "100", "", "300", "", "500", "", "700", "", "900" }),
+	sRelease({ "100", "", "300", "", "500", "", "700", "", "900" }),
 	sRatio({ "1:1","4:1","8:1","12:1","16:1" }),
 	sThreshold({ "-144","","-108","","-72","","-36","","0" })
 {
@@ -36,12 +36,14 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 
 	addAndMakeVisible(vuMeter);
 
-	setupSlider(sAttack, lAttack, "Attack");
-	setupSlider(sRelease, lRelease, "Release");
+	setupSlider(sAttack, lAttack, "Attack ms");
+	setupSlider(sRelease, lRelease, "Release ms");
 	setupSlider(sRatio, lRatio, "Ratio");
 	setupSlider(sThreshold, lThreshold, "Threshold db");
 
 	sThreshold.setSnapping(false);
+	sAttack.setSnapping(false);
+	sRelease.setSnapping(false);
 }
 
 CompressorAudioProcessorEditor::~CompressorAudioProcessorEditor()

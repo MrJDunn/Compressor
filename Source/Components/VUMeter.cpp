@@ -40,6 +40,9 @@ void VUMeter::paint(Graphics& g)
 	drawDial(g);
 	drawNeedle(g);
 	drawBorder(g);
+
+	//TODO Draw logo
+
 	drawWindows(g);
 }
 
@@ -269,4 +272,5 @@ void VUMeter::drawNeedle(Graphics& g)
 	float tipY = centreY + radius * sin(angle);
 
 	g.drawLine({centreX, centreY, tipX, tipY});
+//	g.drawText("DBG: " + String(needleValue), getLocalBounds().reduced(40), Justification::bottomRight);
 }

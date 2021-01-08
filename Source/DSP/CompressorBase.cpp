@@ -41,7 +41,7 @@ void CompressorBase::process(AudioBuffer<float>& buffer)
 
 			reductionAmount = inputDb - outputDb;
 
-			lastGreatestReductionAmount = std::max(reductionAmount, lastGreatestReductionAmount);
+			lastGreatestReductionAmount.store(std::max(reductionAmount, lastGreatestReductionAmount.load()));
 		//	DBG(reductionAmount);
 
 			float gainSmooth = 0.f;
@@ -112,6 +112,6 @@ float CompressorBase::getThreshold()
 
 float CompressorBase::getCompressionAmountDB()
 {
-	return lastGreatestReductionAmount;
+	return lastGreatestReductionAmount.load();
 }
 

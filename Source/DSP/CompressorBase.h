@@ -57,6 +57,6 @@ private:
 	int blockSize = 512;
 	float reductionAmount = 0.f;
 	float minimumDb = -96.f;
-	float lastGreatestReductionAmount = 0.f;
+	std::atomic<float> lastGreatestReductionAmount = 0.f;
 };
 
