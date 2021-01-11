@@ -23,7 +23,7 @@ CompressorAudioProcessorEditor::CompressorAudioProcessorEditor(CompressorAudioPr
 	thresholdAttachment(vts, "threshold", sThreshold),
 	sAttack({ "100", "", "300", "", "500", "", "700", "", "900" }),
 	sRelease({ "100", "", "300", "", "500", "", "700", "", "900" }),
-	sRatio({ "1:1","4:1","8:1","12:1","16:1" }),
+	sRatio({ "2:1","4:1","8:1","12:1","16:1" }),
 	sThreshold({ "-144","","-108","","-72","","-36","","0" })
 {
     // Make sure that before the constructor has finished, you've set the

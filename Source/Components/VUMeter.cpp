@@ -250,18 +250,23 @@ void VUMeter::drawNeedle(Graphics& g)
 {
 	g.setColour(Colour(53,57,62));
 
-	if(processor.getGain() == 0.0f)
+	auto decibels = -1 * processor.getGain();
+	float gainAmount = Decibels::decibelsToGain(decibels);
+
+	if(decibels == 0.0f)
 	{
 		if(needleValue < defaultAngle)
 		{
-			needleValue += 0.01f;
+			needleValue += 0.01f * (10 - processor.getRelease());
 		}
 	}
-	else 
+	else
 	{
-		needleValue = (330.f - processor.getGain()) * radianMultiplier;
+		if (needleValue > defaultAngle - gainAmount)
+			needleValue -= processor.getRatio() * 0.01f * (10 - processor.getAttack());
+		else
+			needleValue = defaultAngle - gainAmount;
 	}
-
 	float angle = 210.f * radianMultiplier + fmod(needleValue, 120.f * radianMultiplier);
 
 	float centreX = getWidth() / 2.0f - 2.0f;

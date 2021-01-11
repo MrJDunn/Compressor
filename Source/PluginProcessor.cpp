@@ -139,8 +139,6 @@ void CompressorAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuf
 {
     ScopedNoDenormals noDenormals;
 
-	readGain(buffer);
-
 	float attack = (float)parameters.getParameterAsValue("attack").getValue();
 	float release = (float)parameters.getParameterAsValue("release").getValue();
 	float ratio = 1.f + (float)parameters.getParameterAsValue("ratio").getValue() * 15.f;
@@ -188,58 +186,19 @@ float CompressorAudioProcessor::getGain()
 	return compressor.getCompressionAmountDB();
 }
 
-void CompressorAudioProcessor::performCompression(AudioBuffer<float>& buffer)
+float CompressorAudioProcessor::getAttack()
 {
-	int numChannels = buffer.getNumChannels();
-	int numSamples = buffer.getNumSamples();
-
-	float attack = (float) parameters.getParameterAsValue("attack").getValue() * 10000.f;
-	float release = (float)parameters.getParameterAsValue("release").getValue() * 10000.f;
-	float ratio = (float)parameters.getParameterAsValue("ratio").getValue() * 10.f ;
-	float threshold = (float)parameters.getParameterAsValue("threshold").getValue();
-
-	readGain(buffer);
-
-	switch(compressorState.mode)
-	{
-	case CompressorState::Mode::IDLE:
-		if (compressorState.gain > threshold)
-		{
-			compressorState.time = Time::currentTimeMillis();
-			compressorState.mode = CompressorState::Mode::ATTACKING;
-		}
-		break;
-	case CompressorState::Mode::ATTACKING:
-		if (Time::currentTimeMillis() - compressorState.time >= attack)
-		{
-			compressorState.time = Time::currentTimeMillis();
-			compressorState.mode = CompressorState::Mode::RELEASING;
-		}
-		break;
-	case CompressorState::Mode::RELEASING:
-		buffer.applyGain(ratio / -1.f);
-		if (Time::currentTimeMillis() - compressorState.time >= release)
-		{
-			compressorState.time = 0.0;
-			compressorState.mode = CompressorState::Mode::IDLE;
-		}
-		break;
-	default:
-		break;
-	}
+	return compressor.getAttack();
 }
 
-void CompressorAudioProcessor::readGain(AudioBuffer<float>& buffer)
+float CompressorAudioProcessor::getRelease()
 {
-	auto numChannels = buffer.getNumChannels();
-	auto numSamples = buffer.getNumSamples();
+	return compressor.getRelease();
+}
 
-	compressorState.gain = 0.0f;
-
-	for(int i = 0; i < numChannels; ++i)
-		compressorState.gain += buffer.getRMSLevel(i, 0, numSamples);
-
-	compressorState.gain = compressorState.gain / (float)numSamples;
+float CompressorAudioProcessor::getRatio()
+{
+	return compressor.getRatio();
 }
 
 //==============================================================================

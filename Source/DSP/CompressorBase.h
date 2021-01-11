@@ -38,12 +38,12 @@ protected:
 	float release;
 
 	/**
-		1 < ratio < 16
+		2 < ratio < 16
 	*/
 	float ratio;
 
 	/** 
-		-144 < threshold < 0
+		-96 < threshold < 0
 	*/
 	float threshold;
 
@@ -56,7 +56,7 @@ private:
 	double sampleRate = 44100.0;
 	int blockSize = 512;
 	float reductionAmount = 0.f;
-	float minimumDb = -96.f;
+	float minimumDb = -40.f;
 	std::atomic<float> lastGreatestReductionAmount = 0.f;
 };
 

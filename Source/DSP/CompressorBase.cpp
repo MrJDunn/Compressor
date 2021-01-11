@@ -82,7 +82,7 @@ void CompressorBase::setRelease(float val)
 
 void CompressorBase::setRatio(float val)
 {
-	ratio = std::min(16.f,std::max(1.f, val));
+	ratio = std::min(16.f,std::max(2.f, val));
 }
 
 void CompressorBase::setThreshold(float val)

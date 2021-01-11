@@ -59,22 +59,15 @@ public:
 	//==============================================================================
 	// UI hooks
 	float getGain();
+	float getAttack();
+	float getRelease();
+	float getRatio();
+
 private:
 
 	AudioProcessorValueTreeState parameters;
 
 	CompressorBase compressor;
-
-	struct CompressorState
-	{
-		enum Mode { IDLE = 0, ATTACKING, RELEASING} mode = Mode::IDLE;
-		float gain = 0.0f;
-		double time = 0.0;
-	} compressorState;
-
-	void performCompression(AudioBuffer<float>&);
-
-	void readGain(AudioBuffer<float>&);
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CompressorAudioProcessor)
